@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17222222222222222" />
+        <entry key="app/src/main/res/drawable/actionbar_background.xml" value="0.3925925925925926" />
+        <entry key="app/src/main/res/drawable/ic_aptoide_logo_dark.xml" value="0.17222222222222222" />
+        <entry key="app/src/main/res/drawable/ic_fragment_home_local_top_apps_list_item_stars.xml" value="0.3925925925925926" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.17222222222222222" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1342102483208582" />
+        <entry key="app/src/main/res/layout/blank_fragment.xml" value="0.31567028985507245" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4099244875943905" />
+        <entry key="app/src/main/res/layout/fragment_home_local_top_apps_list_item.xml" value="0.5" />
+        <entry key="app/src/main/res/menu/action_menu.xml" value="0.425" />
+      </map>
+    </option>
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

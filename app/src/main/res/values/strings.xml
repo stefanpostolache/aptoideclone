@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Apptoide Clone</string>
+    <string name="fragment_home_application_name">Application name</string>
+    <string name="fragment_home_application_rating">4.2</string>
+    <string name="fragment_home_more">More</string>
+    <string name="fragment_home_local_top_apps">Local top apps</string>
+    <string name="fragment_home_editors_choice">Editors choice</string>
+</resources>
