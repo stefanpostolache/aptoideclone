@@ -1,14 +1,13 @@
 package dev.stefan.postolache.apptoideclone.home;
 
+import android.graphics.Insets;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +25,7 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
+@SuppressWarnings("DuplicatedCode")
 public class HomeFragment extends Fragment {
 
     public HomeFragment() {
@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setupEditorsChoiceRecyclerView(view);
-        /*setupLocalTopAppsRecyclerView(view);*/
+        setupLocalTopAppsRecyclerView(view);
         mDisposable = mViewModel
                 .getAppData()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,11 +63,14 @@ public class HomeFragment extends Fragment {
                             .getAll()
                             .getData()
                             .getList();
-                        EditorsChoiceRecyclerViewAdapter adapter = (EditorsChoiceRecyclerViewAdapter) mEditorsChoiceRecyclerView.getAdapter();
-                        if (adapter != null) {
-                            adapter.setItems(apps.subList(0, 5));
+                        EditorsChoiceRecyclerViewAdapter editorsChoiceAdapter = (EditorsChoiceRecyclerViewAdapter) mEditorsChoiceRecyclerView.getAdapter();
+                        if (editorsChoiceAdapter != null) {
+                            editorsChoiceAdapter.setItems(apps.subList(0, 5));
                         }
-
+                        LocalTopAppsRecyclerViewAdapter localTopAppsAdapter = (LocalTopAppsRecyclerViewAdapter) mLocalTopAppsRecyclerView.getAdapter();
+                        if (localTopAppsAdapter != null) {
+                            localTopAppsAdapter.setItems(apps.subList(5, apps.size()-1));
+                        }
                     },
                     throwable -> Timber.e(throwable.getLocalizedMessage())
                 );
@@ -103,17 +106,36 @@ public class HomeFragment extends Fragment {
             }
         });
         DisplayMetrics metrics = new DisplayMetrics();
+
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         mEditorsChoiceRecyclerView.setAdapter(new EditorsChoiceRecyclerViewAdapter(metrics));
     }
 
-    /*public void setupLocalTopAppsRecyclerView(View view) {
+    public void setupLocalTopAppsRecyclerView(View view) {
         mLocalTopAppsRecyclerView = view.findViewById(R.id.local_top_apps_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 view.getContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false);
         mLocalTopAppsRecyclerView.setLayoutManager(layoutManager);
-        mLocalTopAppsRecyclerView.setAdapter(new LocalTopAppsRecyclerViewAdapter());
-    }*/
+        mLocalTopAppsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull @NotNull Rect outRect, @NonNull @NotNull View view,
+                                       @NonNull @NotNull RecyclerView parent, @NonNull @NotNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                int spacing = requireActivity().getResources().getDimensionPixelSize(R.dimen.spacing_margin);
+                outRect.top = spacing;
+                outRect.bottom = spacing;
+                outRect.right = spacing;
+                if (parent.getChildLayoutPosition(view) == 0) {
+                    outRect.left = spacing;
+                }
+            }
+        });
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        mLocalTopAppsRecyclerView.setAdapter(new LocalTopAppsRecyclerViewAdapter(metrics));
+    }
 }

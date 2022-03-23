@@ -16,7 +16,6 @@
 
         <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/custom_toolbar"
-                app:title=""
                 app:titleTextColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
@@ -26,7 +25,7 @@
                     android:layout_height="29dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_aptoide_logo_dark"
-                    android:contentDescription="logo" />
+                    tools:ignore="ContentDescription" />
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

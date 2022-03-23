@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apptoide Clone</string>
+    <string name="app_name">Aptoide Clone</string>
     <string name="fragment_home_application_name">Application name</string>
     <string name="fragment_home_application_rating">4.2</string>
     <string name="fragment_home_more">More</string>

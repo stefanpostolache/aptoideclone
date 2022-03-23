@@ -34,7 +34,7 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
 
     private List<AppDTO> mItems;
     private int mItemCount = 0;
-    private DisplayMetrics mMetrics;
+    private final DisplayMetrics mMetrics;
 
     public EditorsChoiceRecyclerViewAdapter(DisplayMetrics metrics) {
         mMetrics = metrics;

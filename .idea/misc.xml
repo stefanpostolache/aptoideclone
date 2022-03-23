@@ -13,13 +13,15 @@
         <entry key="app/src/main/res/drawable/shade.xml" value="0.2814814814814815" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/blank_fragment.xml" value="0.31567028985507245" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4074074074074074" />
         <entry key="app/src/main/res/layout/fragment_home_editors_choice_list_item.xml" value="0.22365350124904063" />
-        <entry key="app/src/main/res/layout/fragment_home_local_top_apps_list_item.xml" value="0.9191826069706669" />
+        <entry key="app/src/main/res/layout/fragment_home_local_top_apps_list_item.xml" value="0.46201814058956914" />
         <entry key="app/src/main/res/layout/fragment_item.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/menu/action_menu.xml" value="0.425" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2484375" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2484375" />
       </map>
     </option>
   </component>
