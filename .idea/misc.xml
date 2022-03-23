@@ -8,11 +8,17 @@
         <entry key="app/src/main/res/drawable/ic_aptoide_logo_dark.xml" value="0.17222222222222222" />
         <entry key="app/src/main/res/drawable/ic_fragment_home_local_top_apps_list_item_stars.xml" value="0.3925925925925926" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.17222222222222222" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1342102483208582" />
+        <entry key="app/src/main/res/drawable/ic_shade.xml" value="0.2814814814814815" />
+        <entry key="app/src/main/res/drawable/ic_star_black_small.xml" value="0.440625" />
+        <entry key="app/src/main/res/drawable/shade.xml" value="0.2814814814814815" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/blank_fragment.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4099244875943905" />
-        <entry key="app/src/main/res/layout/fragment_home_local_top_apps_list_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4074074074074074" />
+        <entry key="app/src/main/res/layout/fragment_home_editors_choice_list_item.xml" value="0.22365350124904063" />
+        <entry key="app/src/main/res/layout/fragment_home_local_top_apps_list_item.xml" value="0.9191826069706669" />
+        <entry key="app/src/main/res/layout/fragment_item.xml" value="0.31567028985507245" />
+        <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/menu/action_menu.xml" value="0.425" />
       </map>
     </option>

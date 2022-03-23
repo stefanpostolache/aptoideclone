@@ -4,6 +4,9 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main_nav"
             app:startDestination="@id/homeFragment">
 
-    <fragment android:id="@+id/homeFragment" android:name="dev.stefan.postolache.apptoideclone.home.HomeFragment"
-              android:label="fragment_home" tools:layout="@layout/fragment_home"/>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="dev.stefan.postolache.apptoideclone.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>

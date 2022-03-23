@@ -1,47 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FFFFFF"
     android:orientation="vertical"
-    android:weightSum="2"
     tools:context=".home.HomeFragment">
 
-    <TextView
-        android:id="@+id/editors_choice_textview"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/fragment_home_editors_choice"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/section_title" />
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/editors_choice_more_btn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="end"
-        android:layout_marginEnd="8dp"
-        android:text="@string/fragment_home_more"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editors_choice_textview"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+        <TextView
+            android:id="@+id/editors_choice_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_margin"
+            android:text="@string/fragment_home_editors_choice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/section_title" />
+        
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editors_choice_more_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/spacing_margin"
+            android:text="@string/fragment_home_more"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/editors_choice_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-
-        android:id="@+id/local_Top_apps_list"
-        android:layout_width="0dp"
+        android:id="@+id/editors_choice_list"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="horizontal"
+        android:scrollbars="none"
+        android:layout_weight="5"
+        android:layout_marginBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/middle_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,43 +61,43 @@
         tools:itemCount="3"
         tools:listitem="@layout/fragment_home_editors_choice_list_item" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middle_guideline"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/local_top_apps_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/fragment_home_local_top_apps"
+            android:layout_marginStart="@dimen/spacing_margin"
+            style="@style/section_title" />
 
-    <TextView
-        android:id="@+id/local_top_apps_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="32dp"
-        android:text="@string/fragment_home_local_top_apps"
-        style="@style/section_title"
-        app:layout_constraintStart_toStartOf="@+id/editors_choice_textview"
-        app:layout_constraintTop_toTopOf="@+id/middle_guideline" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/local_top_apps_more_btn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="end"
-        android:text="@string/fragment_home_more"
-        app:layout_constraintBaseline_toBaselineOf="@+id/local_top_apps_textview"
-        app:layout_constraintEnd_toEndOf="@+id/editors_choice_more_btn"
-        tools:ignore="TextContrastCheck" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/local_top_apps_more_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/spacing_margin"
+            android:text="@string/fragment_home_more"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/editors_list"
-        android:layout_width="0dp"
+        android:id="@+id/local_top_apps_list"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="horizontal"
+        android:layout_weight="5"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,4 +106,9 @@
         tools:listItem="@layout/fragment_home_editors_choice_list_item"
         tools:listitem="" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
