@@ -10,14 +10,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
 import dev.stefan.postolache.apptoideclone.R;
 import dev.stefan.postolache.apptoideclone.databinding.FragmentHomeBinding;
 import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
 import dev.stefan.postolache.apptoideclone.networking.dtos.ResultDTO;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import org.jetbrains.annotations.NotNull;
-import timber.log.Timber;
 
 import java.util.List;
 
@@ -49,23 +48,25 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+
         DisplayMetrics metrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         mNavController = Navigation.findNavController(container);
-
-        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
         setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics,
-                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment())));
+                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(app))));
         setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics,
-                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment())));
+                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(app))));
+
+        mViewModel.getFailedDataRetrieval().observe(this, didFail -> {
+            if (didFail) didFailRetrievingData();
+        });
 
         mDisposable = mViewModel
                 .getAppData()
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    this::didReceiveAppData,
-                    throwable -> Timber.e(throwable.getLocalizedMessage())
+                    this::didReceiveAppData
                 );
 
         return mBinding.getRoot();
@@ -121,5 +122,14 @@ public class HomeFragment extends Fragment {
         if (localTopAppsAdapter != null) {
             localTopAppsAdapter.setItems(apps.subList(5, apps.size()-1));
         }
+    }
+
+    public void didFailRetrievingData() {
+
+        Snackbar.make(mBinding.getRoot(),
+                        R.string.fragment_home_error_message,
+                        Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.fragment_home_try_again, view -> mViewModel.retryDownload())
+                .show();
     }
 }

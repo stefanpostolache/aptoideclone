@@ -6,4 +6,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="separator_small">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
 </resources>

@@ -32,7 +32,7 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
             super(binding.getRoot());
             appGraphic = binding.applicationGraphic;
             appName = binding.applicationName;
-            rating = binding.applicationRating;;
+            rating = binding.applicationRating;
         }
     }
 
@@ -59,13 +59,11 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
     @Override
     public void onBindViewHolder(@NonNull @NotNull EditorsChoiceRecyclerViewAdapter.AppViewHolder holder, int position) {
         holder.mItem = mItems.get(position);
-        holder.appName.setText(holder.mItem.getName());
-        holder.rating.setText(String.valueOf(holder.mItem.getRating()));
-        holder.itemView.setOnClickListener(view -> {
-            mListener.showDetailsForApp(holder.mItem);
-        });
+        holder.appName.setText(holder.mItem.name);
+        holder.rating.setText(String.valueOf(holder.mItem.rating));
+        holder.itemView.setOnClickListener(view -> mListener.showDetailsForApp(holder.mItem));
         Picasso.get()
-                .load(holder.mItem.getGraphic())
+                .load(holder.mItem.graphic)
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.image_placeholder)

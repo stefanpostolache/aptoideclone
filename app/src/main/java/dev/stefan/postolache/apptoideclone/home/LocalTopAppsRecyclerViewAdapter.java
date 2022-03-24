@@ -58,11 +58,11 @@ public class LocalTopAppsRecyclerViewAdapter extends RecyclerView.Adapter<LocalT
     @Override
     public void onBindViewHolder(@NonNull @NotNull LocalTopAppsRecyclerViewAdapter.AppViewHolder holder, int position) {
         holder.mItem = mItems.get(position);
-        holder.appNameTextView.setText(holder.mItem.getName());
-        holder.appRatingTextView.setText(String.valueOf(holder.mItem.getRating()));
+        holder.appNameTextView.setText(holder.mItem.name);
+        holder.appRatingTextView.setText(String.valueOf(holder.mItem.rating));
         holder.itemView.setOnClickListener(view -> mListener.showDetailsForApp(holder.mItem));
         Picasso.get()
-                .load(holder.mItem.getIcon())
+                .load(holder.mItem.icon)
                 .placeholder(R.drawable.image_placeholder)
                 .fit()
                 .centerInside()

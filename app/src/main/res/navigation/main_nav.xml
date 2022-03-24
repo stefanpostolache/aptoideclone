@@ -20,5 +20,9 @@
         android:id="@+id/appDetailsFragment"
         android:name="dev.stefan.postolache.apptoideclone.appdetails.AppDetailsFragment"
         android:label="fragment_app_details"
-        tools:layout="@layout/fragment_app_details" />
+        tools:layout="@layout/fragment_app_details" >
+        <argument
+            android:name="app"
+            app:argType="dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO" />
+    </fragment>
 </navigation>

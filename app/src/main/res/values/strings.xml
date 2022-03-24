@@ -5,6 +5,12 @@
     <string name="fragment_home_more">More</string>
     <string name="fragment_home_local_top_apps">Local top apps</string>
     <string name="fragment_home_editors_choice">Editors choice</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_home_error_message">There was a problem with the network.</string>
+    <string name="fragment_home_try_again">Try again</string>
+    <string name="fragment_app_details_version">Version</string>
+    <string name="fragment_app_details_updated_at">Updated at</string>
+    <string name="fragment_app_details_package">Package</string>
+    <string name="fragment_add_details_size">Size</string>
+    <string name="fragment_app_details_downloads">Downloads</string>
+    <string name="fragment_app_details_rating">Rating</string>
 </resources>
