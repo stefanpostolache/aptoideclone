@@ -19,7 +19,7 @@ import java.util.List;
 public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<EditorsChoiceRecyclerViewAdapter.AppViewHolder> {
 
     public interface OnAppCardClickedListener {
-        void showDefailsForApp(AppDTO app);
+        void showDetailsForApp(AppDTO app);
     }
 
     static class AppViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +62,7 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
         holder.appName.setText(holder.mItem.getName());
         holder.rating.setText(String.valueOf(holder.mItem.getRating()));
         holder.itemView.setOnClickListener(view -> {
-            mListener.showDefailsForApp(holder.mItem);
+            mListener.showDetailsForApp(holder.mItem);
         });
         Picasso.get()
                 .load(holder.mItem.getGraphic())

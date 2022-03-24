@@ -3,7 +3,6 @@ package dev.stefan.postolache.apptoideclone.home;
 import android.annotation.SuppressLint;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,7 +60,7 @@ public class LocalTopAppsRecyclerViewAdapter extends RecyclerView.Adapter<LocalT
         holder.mItem = mItems.get(position);
         holder.appNameTextView.setText(holder.mItem.getName());
         holder.appRatingTextView.setText(String.valueOf(holder.mItem.getRating()));
-        holder.itemView.setOnClickListener(view -> mListener.showDefailsForApp(holder.mItem));
+        holder.itemView.setOnClickListener(view -> mListener.showDetailsForApp(holder.mItem));
         Picasso.get()
                 .load(holder.mItem.getIcon())
                 .placeholder(R.drawable.image_placeholder)

@@ -1,114 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:backgroundTint="#FFFFFF"
-    android:orientation="vertical"
-    tools:context=".home.HomeFragment">
-
-    <LinearLayout
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal">
+        android:backgroundTint="#FFFFFF"
+        android:orientation="vertical"
+        tools:showIn="@layout/activity_main"
+        tools:context=".home.HomeFragment">
 
-        <TextView
-            android:id="@+id/editors_choice_textview"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/spacing_margin"
-            android:text="@string/fragment_home_editors_choice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/section_title" />
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/editors_choice_textview"
+                style="@style/section_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_margin"
+                android:text="@string/fragment_home_editors_choice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editors_choice_more_btn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginEnd="@dimen/spacing_margin"
+                android:text="@string/fragment_home_more"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/editors_choice_textview"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/editors_choice_list"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/editors_choice_more_btn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginEnd="@dimen/spacing_margin"
-            android:text="@string/fragment_home_more"
-            android:textSize="12sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/editors_choice_textview"
+            android:layout_weight="5"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.37"
+            tools:itemCount="3"
+            tools:listitem="@layout/fragment_home_editors_choice_list_item" />
 
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/editors_choice_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scrollbars="none"
-        android:layout_weight="5"
-        android:layout_marginBottom="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editors_choice_more_btn"
-        app:layout_constraintVertical_bias="0.0"
-        tools:itemCount="3"
-        tools:listitem="@layout/fragment_home_editors_choice_list_item" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/local_top_apps_textview"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/fragment_home_local_top_apps"
-            android:layout_marginStart="@dimen/spacing_margin"
-            style="@style/section_title" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/editors_choice_list">
 
-        <View
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/local_top_apps_textview"
+                style="@style/section_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_margin"
+                android:text="@string/fragment_home_local_top_apps" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/local_top_apps_more_btn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/spacing_margin"
+                android:text="@string/fragment_home_more"
+                android:textSize="12sp"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/local_top_apps_list"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="5"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            tools:listitem="@layout/fragment_home_local_top_apps_list_item" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/local_top_apps_more_btn"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:textSize="12sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/spacing_margin"
-            android:text="@string/fragment_home_more"
-            tools:ignore="TextContrastCheck" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/local_top_apps_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/local_top_apps_more_btn"
-        tools:listItem="@layout/fragment_home_editors_choice_list_item"
-        tools:listitem="" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

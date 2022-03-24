@@ -1,8 +1,5 @@
 package dev.stefan.postolache.apptoideclone.home;
 
-import android.graphics.Insets;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.*;
@@ -14,23 +11,21 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dev.stefan.postolache.apptoideclone.R;
+import dev.stefan.postolache.apptoideclone.databinding.FragmentHomeBinding;
 import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
+import dev.stefan.postolache.apptoideclone.networking.dtos.ResultDTO;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-@SuppressWarnings("DuplicatedCode")
 public class HomeFragment extends Fragment {
-
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -40,10 +35,8 @@ public class HomeFragment extends Fragment {
 
     private Disposable mDisposable;
 
-    private RecyclerView mEditorsChoiceRecyclerView;
-    private RecyclerView mLocalTopAppsRecyclerView;
-
     private NavController mNavController;
+    private FragmentHomeBinding mBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,37 +46,29 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        setupEditorsChoiceRecyclerView(view);
-        setupLocalTopAppsRecyclerView(view);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
         mNavController = Navigation.findNavController(container);
+
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics,
+                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment())));
+        setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics,
+                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment())));
+
         mDisposable = mViewModel
                 .getAppData()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    result -> {
-                        List<AppDTO> apps = result
-                            .getResponses()
-                            .getListApps()
-                            .getDatasets()
-                            .getAll()
-                            .getData()
-                            .getList();
-                        EditorsChoiceRecyclerViewAdapter editorsChoiceAdapter = (EditorsChoiceRecyclerViewAdapter) mEditorsChoiceRecyclerView.getAdapter();
-                        if (editorsChoiceAdapter != null) {
-                            editorsChoiceAdapter.setItems(apps.subList(0, 5));
-                        }
-                        LocalTopAppsRecyclerViewAdapter localTopAppsAdapter = (LocalTopAppsRecyclerViewAdapter) mLocalTopAppsRecyclerView.getAdapter();
-                        if (localTopAppsAdapter != null) {
-                            localTopAppsAdapter.setItems(apps.subList(5, apps.size()-1));
-                        }
-                    },
+                    this::didReceiveAppData,
                     throwable -> Timber.e(throwable.getLocalizedMessage())
                 );
-        // Inflate the layout for this fragment
-        return view;
+
+        return mBinding.getRoot();
     }
 
     @Override
@@ -93,73 +78,48 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        Timber.d("Options menu inflating");
-        inflater.inflate(R.menu.action_menu, menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
         return false;
     }
 
-    public void setupEditorsChoiceRecyclerView(View view) {
-        mEditorsChoiceRecyclerView = view.findViewById(R.id.editors_choice_list);
+    /**
+     * Prepares Recyclerview to be displayed in the HomeFragment
+     * @param list a recycler view
+     * @param adapter a recycler view adapter
+     */
+    public void setupRecyclerView(RecyclerView list, RecyclerView.Adapter adapter) {
+        int spacing = requireActivity().getResources().getDimensionPixelSize(R.dimen.spacing_margin);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
-                view.getContext(),
+                requireActivity(),
                 LinearLayoutManager.HORIZONTAL,
                 false);
-        mEditorsChoiceRecyclerView.setLayoutManager(layoutManager);
-        mEditorsChoiceRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull @NotNull Rect outRect, @NonNull @NotNull View view, @NonNull @NotNull RecyclerView parent, @NonNull @NotNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                // adding spacing of 8dp between items
-                int spacing = requireActivity().getResources().getDimensionPixelSize(R.dimen.spacing_margin);
-                outRect.top = spacing;
-                outRect.bottom = spacing;
-                outRect.right = spacing;
-                if (parent.getChildLayoutPosition(view) == 0) {
-                    outRect.left = spacing;
-                }
-            }
-        });
-        DisplayMetrics metrics = new DisplayMetrics();
 
-        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        mEditorsChoiceRecyclerView.setAdapter(new EditorsChoiceRecyclerViewAdapter(metrics, app -> {
-            mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment());
-        }));
+        list.setLayoutManager(layoutManager);
+
+        list.addItemDecoration(new AppItemDecoration(spacing));
+
+        list.setAdapter(adapter);
     }
 
-    public void setupLocalTopAppsRecyclerView(View view) {
-        mLocalTopAppsRecyclerView = view.findViewById(R.id.local_top_apps_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(
-                view.getContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false);
-        mLocalTopAppsRecyclerView.setLayoutManager(layoutManager);
-        mLocalTopAppsRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull @NotNull Rect outRect, @NonNull @NotNull View view,
-                                       @NonNull @NotNull RecyclerView parent, @NonNull @NotNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                int spacing = requireActivity().getResources().getDimensionPixelSize(R.dimen.spacing_margin);
-                outRect.top = spacing;
-                outRect.bottom = spacing;
-                outRect.right = spacing;
-                if (parent.getChildLayoutPosition(view) == 0) {
-                    outRect.left = spacing;
-                }
-            }
-        });
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-        mLocalTopAppsRecyclerView.setAdapter(new LocalTopAppsRecyclerViewAdapter(metrics, app -> {
-            mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment());
-        }));
+    /**
+     * Handles successful retrieval of app data
+     * @param result the result of the network call
+     */
+    public void didReceiveAppData(ResultDTO result) {
+        List<AppDTO> apps = result
+                .getResponses()
+                .getListApps()
+                .getDatasets()
+                .getAll()
+                .getData()
+                .getList();
+        EditorsChoiceRecyclerViewAdapter editorsChoiceAdapter = (EditorsChoiceRecyclerViewAdapter) mBinding.editorsChoiceList.getAdapter();
+        if (editorsChoiceAdapter != null) {
+            editorsChoiceAdapter.setItems(apps.subList(0, 5));
+        }
+        LocalTopAppsRecyclerViewAdapter localTopAppsAdapter = (LocalTopAppsRecyclerViewAdapter) mBinding.localTopAppsList.getAdapter();
+        if (localTopAppsAdapter != null) {
+            localTopAppsAdapter.setItems(apps.subList(5, apps.size()-1));
+        }
     }
 }

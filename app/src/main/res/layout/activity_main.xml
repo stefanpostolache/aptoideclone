@@ -19,7 +19,8 @@
                 app:titleTextColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                tools:ignore="DuplicateIds">
+                tools:ignore="DuplicateIds"
+                android:theme="@style/Theme.ApptoideClone.Toolbar">
             <ImageView
                     android:layout_width="117dp"
                     android:layout_height="29dp"
