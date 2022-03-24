@@ -3,6 +3,7 @@ package dev.stefan.postolache.apptoideclone.home;
 import android.annotation.SuppressLint;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import static dev.stefan.postolache.apptoideclone.home.EditorsChoiceRecyclerViewAdapter.*;
 
 public class LocalTopAppsRecyclerViewAdapter extends RecyclerView.Adapter<LocalTopAppsRecyclerViewAdapter.AppViewHolder> {
 
@@ -35,10 +38,12 @@ public class LocalTopAppsRecyclerViewAdapter extends RecyclerView.Adapter<LocalT
     private List<AppDTO> mItems;
     private int mItemCount;
     private final DisplayMetrics mMetrics;
+    private final OnAppCardClickedListener mListener;
 
 
-    public LocalTopAppsRecyclerViewAdapter(DisplayMetrics metrics) {
+    public LocalTopAppsRecyclerViewAdapter(DisplayMetrics metrics, OnAppCardClickedListener listener) {
         mMetrics = metrics;
+        mListener = listener;
     }
 
     @NonNull
@@ -56,6 +61,7 @@ public class LocalTopAppsRecyclerViewAdapter extends RecyclerView.Adapter<LocalT
         holder.mItem = mItems.get(position);
         holder.appNameTextView.setText(holder.mItem.getName());
         holder.appRatingTextView.setText(String.valueOf(holder.mItem.getRating()));
+        holder.itemView.setOnClickListener(view -> mListener.showDefailsForApp(holder.mItem));
         Picasso.get()
                 .load(holder.mItem.getIcon())
                 .placeholder(R.drawable.image_placeholder)

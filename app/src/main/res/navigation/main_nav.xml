@@ -7,6 +7,18 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="dev.stefan.postolache.apptoideclone.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_appDetailsFragment"
+            app:destination="@id/appDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/appDetailsFragment"
+        android:name="dev.stefan.postolache.apptoideclone.appdetails.AppDetailsFragment"
+        android:label="fragment_app_details"
+        tools:layout="@layout/fragment_app_details" />
 </navigation>

@@ -9,6 +9,8 @@ import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import dev.stefan.postolache.apptoideclone.R;
@@ -28,6 +30,8 @@ import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class HomeFragment extends Fragment {
 
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -39,9 +43,12 @@ public class HomeFragment extends Fragment {
     private RecyclerView mEditorsChoiceRecyclerView;
     private RecyclerView mLocalTopAppsRecyclerView;
 
+    private NavController mNavController;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
     }
 
@@ -51,6 +58,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setupEditorsChoiceRecyclerView(view);
         setupLocalTopAppsRecyclerView(view);
+        mNavController = Navigation.findNavController(container);
         mDisposable = mViewModel
                 .getAppData()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,6 +92,18 @@ public class HomeFragment extends Fragment {
         mDisposable.dispose();
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        Timber.d("Options menu inflating");
+        inflater.inflate(R.menu.action_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        return false;
+    }
+
     public void setupEditorsChoiceRecyclerView(View view) {
         mEditorsChoiceRecyclerView = view.findViewById(R.id.editors_choice_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
@@ -108,7 +128,9 @@ public class HomeFragment extends Fragment {
         DisplayMetrics metrics = new DisplayMetrics();
 
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        mEditorsChoiceRecyclerView.setAdapter(new EditorsChoiceRecyclerViewAdapter(metrics));
+        mEditorsChoiceRecyclerView.setAdapter(new EditorsChoiceRecyclerViewAdapter(metrics, app -> {
+            mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment());
+        }));
     }
 
     public void setupLocalTopAppsRecyclerView(View view) {
@@ -136,6 +158,8 @@ public class HomeFragment extends Fragment {
         DisplayMetrics metrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        mLocalTopAppsRecyclerView.setAdapter(new LocalTopAppsRecyclerViewAdapter(metrics));
+        mLocalTopAppsRecyclerView.setAdapter(new LocalTopAppsRecyclerViewAdapter(metrics, app -> {
+            mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment());
+        }));
     }
 }

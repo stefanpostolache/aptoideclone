@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    app:rippleColor="@color/orange_500"
+    app:rippleColor="@color/orange_700"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout

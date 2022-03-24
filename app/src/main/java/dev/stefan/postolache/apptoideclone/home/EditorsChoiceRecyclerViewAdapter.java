@@ -18,6 +18,10 @@ import java.util.List;
 
 public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<EditorsChoiceRecyclerViewAdapter.AppViewHolder> {
 
+    public interface OnAppCardClickedListener {
+        void showDefailsForApp(AppDTO app);
+    }
+
     static class AppViewHolder extends RecyclerView.ViewHolder {
         public final ImageView appGraphic;
         public final TextView appName;
@@ -28,16 +32,18 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
             super(binding.getRoot());
             appGraphic = binding.applicationGraphic;
             appName = binding.applicationName;
-            rating = binding.applicationRating;
+            rating = binding.applicationRating;;
         }
     }
 
     private List<AppDTO> mItems;
     private int mItemCount = 0;
     private final DisplayMetrics mMetrics;
+    private final OnAppCardClickedListener mListener;
 
-    public EditorsChoiceRecyclerViewAdapter(DisplayMetrics metrics) {
+    public EditorsChoiceRecyclerViewAdapter(DisplayMetrics metrics, OnAppCardClickedListener listener) {
         mMetrics = metrics;
+        mListener = listener;
     }
 
     @NonNull
@@ -46,7 +52,6 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
     public AppViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         FragmentHomeEditorsChoiceListItemBinding binding = FragmentHomeEditorsChoiceListItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-
         binding.getRoot().getLayoutParams().width = (int) (mMetrics.widthPixels * 0.9);
         return new AppViewHolder(binding);
     }
@@ -56,6 +61,9 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
         holder.mItem = mItems.get(position);
         holder.appName.setText(holder.mItem.getName());
         holder.rating.setText(String.valueOf(holder.mItem.getRating()));
+        holder.itemView.setOnClickListener(view -> {
+            mListener.showDefailsForApp(holder.mItem);
+        });
         Picasso.get()
                 .load(holder.mItem.getGraphic())
                 .fit()
