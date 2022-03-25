@@ -14,7 +14,6 @@ import com.google.android.material.snackbar.Snackbar;
 import dev.stefan.postolache.apptoideclone.R;
 import dev.stefan.postolache.apptoideclone.databinding.FragmentHomeBinding;
 import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
-import dev.stefan.postolache.apptoideclone.networking.dtos.ResultDTO;
 import io.reactivex.rxjava3.disposables.Disposable;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +31,8 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel mViewModel;
 
-    private Disposable mDisposable;
+    private Disposable mDataFetchDisposable;
+    private Disposable mFailureDisposable;
 
     private NavController mNavController;
     private FragmentHomeBinding mBinding;
@@ -55,17 +55,14 @@ public class HomeFragment extends Fragment {
         DisplayMetrics metrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics,
-                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(app))));
+        setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics, this::showDetailsOf));
 
-        setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics,
-                app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(app))));
+        setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics, this::showDetailsOf));
 
-        mViewModel.getFailedDataRetrieval().observe(this, didFail -> {
-            if (didFail) didFailRetrievingData();
-        });
+        mFailureDisposable = mViewModel.hasFailedDataRetrieval()
+                .subscribe(this::didFailRetrievingData);
 
-        mDisposable = mViewModel
+        mDataFetchDisposable = mViewModel
                 .getAppData()
                 .subscribe(
                     this::didReceiveAppData
@@ -77,7 +74,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mDisposable.dispose();
+        mDataFetchDisposable.dispose();
+        mFailureDisposable.dispose();
     }
 
     @Override
@@ -106,16 +104,9 @@ public class HomeFragment extends Fragment {
 
     /**
      * Handles successful retrieval of app data
-     * @param result the result of a successful network call
+     * @param apps list of apps to be displayed in the home page
      */
-    public void didReceiveAppData(ResultDTO result) {
-        List<AppDTO> apps = result
-                .getResponses()
-                .getListApps()
-                .getDatasets()
-                .getAll()
-                .getData()
-                .getList();
+    public void didReceiveAppData(List<AppDTO> apps) {
         EditorsChoiceRecyclerViewAdapter editorsChoiceAdapter = (EditorsChoiceRecyclerViewAdapter) mBinding.editorsChoiceList.getAdapter();
         if (editorsChoiceAdapter != null) {
             editorsChoiceAdapter.setItems(apps.subList(0, 5));
@@ -129,11 +120,15 @@ public class HomeFragment extends Fragment {
     /**
      * Handles
      */
-    public void didFailRetrievingData() {
+    public void didFailRetrievingData(Boolean failure) {
         Snackbar.make(mBinding.getRoot(),
                         R.string.fragment_home_error_message,
                         Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.fragment_home_try_again, view -> mViewModel.retryDownload())
                 .show();
+    }
+
+    public void showDetailsOf(AppDTO appDTO) {
+        mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(appDTO));
     }
 }

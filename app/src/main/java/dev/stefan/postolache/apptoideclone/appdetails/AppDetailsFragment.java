@@ -50,7 +50,7 @@ public class AppDetailsFragment extends Fragment {
                 .into(mBinding.AppIcon);
 
         mBinding.setRating(mApp.rating);
-        mBinding.setDownloads(NumberFormat.getNumberInstance().format(mApp.downloads));
+        mBinding.setDownloads(mApp.downloads > 1000000? "Over 1 M" : NumberFormat.getNumberInstance().format(mApp.downloads));
         mBinding.setSize(Formatter.formatFileSize(requireActivity(), mApp.size));
 
         mBinding.setPackageName(mApp.packageName);

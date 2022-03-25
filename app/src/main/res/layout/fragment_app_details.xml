@@ -62,7 +62,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/appName"
+            android:id="@+id/appNameTxt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -74,15 +74,15 @@
             tools:text="App Name" />
 
         <TextView
-            android:id="@+id/storeName"
+            android:id="@+id/storeNameTxt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@{storeName}"
             android:textColor="@color/orange_700"
-            app:layout_constraintEnd_toEndOf="@+id/appName"
-            app:layout_constraintStart_toStartOf="@+id/appName"
-            app:layout_constraintTop_toBottomOf="@+id/appName"
+            app:layout_constraintEnd_toEndOf="@+id/appNameTxt"
+            app:layout_constraintStart_toStartOf="@+id/appNameTxt"
+            app:layout_constraintTop_toBottomOf="@+id/appNameTxt"
             tools:ignore="TextContrastCheck"
             tools:text="Store Name" />
 
@@ -109,11 +109,10 @@
                     android:id="@+id/fragment_app_details_rating_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="4dp"
                     android:text="@{String.valueOf(rating)}"
-                    android:textColor="@color/black"
-                    app:drawableEndCompat="@drawable/ic_star_black_small"
-                    tools:text="4.7" />
+                    app:drawableEndCompat="@drawable/ic_star_small"
+                    tools:text="4.7"
+                    style="@style/value_text" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -137,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{downloads}"
-                    android:textColor="@color/black"
+                    style="@style/value_text"
                     tools:text="Over 1 M" />
 
                 <TextView
@@ -163,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{size}"
-                    android:textColor="@color/black"
+                    style="@style/value_text"
                     tools:text="Over 1 M" />
 
                 <TextView
@@ -248,7 +247,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="storeName,AppIcon" />
+            app:constraint_referenced_ids="storeNameTxt,AppIcon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

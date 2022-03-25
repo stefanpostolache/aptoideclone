@@ -51,7 +51,7 @@ public class LocalTopAppsRecyclerViewAdapter extends RecyclerView.Adapter<LocalT
     public AppViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         FragmentHomeLocalTopAppsListItemBinding binding = FragmentHomeLocalTopAppsListItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        binding.getRoot().getLayoutParams().width = (int) (mMetrics.widthPixels * 0.28);
+        binding.getRoot().getLayoutParams().width = (int) (mMetrics.widthPixels * 0.28); // each item's width is 28% of screen
         return new AppViewHolder(binding);
     }
 

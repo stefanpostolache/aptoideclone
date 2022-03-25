@@ -52,7 +52,7 @@ public class EditorsChoiceRecyclerViewAdapter extends RecyclerView.Adapter<Edito
     public AppViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         FragmentHomeEditorsChoiceListItemBinding binding = FragmentHomeEditorsChoiceListItemBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        binding.getRoot().getLayoutParams().width = (int) (mMetrics.widthPixels * 0.9);
+        binding.getRoot().getLayoutParams().width = (int) (mMetrics.widthPixels * 0.9); // each item has a width of 90% of screen
         return new AppViewHolder(binding);
     }
 

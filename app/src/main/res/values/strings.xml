@@ -5,7 +5,7 @@
     <string name="fragment_home_more">More</string>
     <string name="fragment_home_local_top_apps">Local top apps</string>
     <string name="fragment_home_editors_choice">Editors choice</string>
-    <string name="fragment_home_error_message">There was a problem with the network.</string>
+    <string name="fragment_home_error_message">There was a network problem</string>
     <string name="fragment_home_try_again">Try again</string>
     <string name="fragment_app_details_version">Version</string>
     <string name="fragment_app_details_updated_at">Updated at</string>

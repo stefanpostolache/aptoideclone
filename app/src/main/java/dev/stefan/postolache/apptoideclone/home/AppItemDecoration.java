@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * An item decoration that adds top, right, bottom and left spacing to items in a RecyclerView
+ */
 public class AppItemDecoration extends RecyclerView.ItemDecoration {
     private final int mSpacing;
 
@@ -25,7 +28,7 @@ public class AppItemDecoration extends RecyclerView.ItemDecoration {
         outRect.top = mSpacing;
         outRect.bottom = mSpacing;
         outRect.right = mSpacing;
-        if (parent.getChildLayoutPosition(view) == 0) {
+        if (parent.getChildLayoutPosition(view) == 0) { // let spacing is only added to the first item in a recyclerview
             outRect.left = mSpacing;
         }
     }

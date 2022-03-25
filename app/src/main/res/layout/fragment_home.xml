@@ -22,12 +22,12 @@
 
             <TextView
                 android:id="@+id/editors_choice_textview"
-                style="@style/section_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/spacing_margin"
                 android:text="@string/fragment_home_editors_choice"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,12 +75,12 @@
 
             <TextView
                 android:id="@+id/local_top_apps_textview"
-                style="@style/section_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/spacing_margin"
-                android:text="@string/fragment_home_local_top_apps" />
+                android:text="@string/fragment_home_local_top_apps"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <View
                 android:layout_width="0dp"

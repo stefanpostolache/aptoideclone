@@ -8,6 +8,9 @@ import hu.akarnokd.rxjava3.retrofit.*;
 
 import java.sql.Timestamp;
 
+/**
+ * A Singleton class that builds and provides the Retrofit client for the Aptoide API
+ */
 public class AptoideClientHolder {
 
     public static AptoideClientHolder INSTANCE = new AptoideClientHolder();
