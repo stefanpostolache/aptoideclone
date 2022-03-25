@@ -1,13 +1,12 @@
 package dev.stefan.postolache.apptoideclone.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.*;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
@@ -17,6 +16,7 @@ import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
 import io.reactivex.rxjava3.disposables.Disposable;
 import org.jetbrains.annotations.NotNull;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 /**
@@ -24,6 +24,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    public interface OnFragmentInteractionListener {
+        void showDetailsOf(AppDTO appDTO);
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -34,8 +38,19 @@ public class HomeFragment extends Fragment {
     private Disposable mDataFetchDisposable;
     private Disposable mFailureDisposable;
 
-    private NavController mNavController;
     private FragmentHomeBinding mBinding;
+
+    private OnFragmentInteractionListener mListener;
+
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new InvalidParameterException("Activity must implement HomeFragment.OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,14 +65,12 @@ public class HomeFragment extends Fragment {
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        mNavController = Navigation.findNavController(container);
-
         DisplayMetrics metrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics, this::showDetailsOf));
+        setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics, mListener::showDetailsOf));
 
-        setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics, this::showDetailsOf));
+        setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics, mListener::showDetailsOf));
 
         mFailureDisposable = mViewModel.hasFailedDataRetrieval()
                 .subscribe(this::didFailRetrievingData);
@@ -126,9 +139,5 @@ public class HomeFragment extends Fragment {
                         Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.fragment_home_try_again, view -> mViewModel.retryDownload())
                 .show();
-    }
-
-    public void showDetailsOf(AppDTO appDTO) {
-        mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(appDTO));
     }
 }

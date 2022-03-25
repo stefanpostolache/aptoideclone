@@ -1,12 +1,18 @@
 package dev.stefan.postolache.apptoideclone.appdetails;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.lifecycle.ViewModelProvider;
 import com.squareup.picasso.Picasso;
+import dev.stefan.postolache.apptoideclone.home.HomeViewModel;
+import dev.stefan.postolache.apptoideclone.MainActivity;
 import dev.stefan.postolache.apptoideclone.databinding.FragmentAppDetailsBinding;
 import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
 import org.jetbrains.annotations.NotNull;
@@ -26,13 +32,35 @@ public class AppDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private static final String APP = "app";
+
     private AppDTO mApp;
+
+    private ActionBar mActionBar;
+
+    public static AppDetailsFragment newInstance(AppDTO app) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(APP, app);
+
+        AppDetailsFragment fragment = new AppDetailsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        MainActivity activity = (MainActivity) context;
+        if ((mActionBar = activity.getSupportActionBar()) != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppDetailsFragmentArgs args = AppDetailsFragmentArgs.fromBundle(getArguments());
-        mApp = args.getApp();
+        mApp = AppDetailsFragmentArgs.fromBundle(getArguments()).getApp();
     }
 
     @Override
@@ -60,5 +88,10 @@ public class AppDetailsFragment extends Fragment {
         return mBinding.getRoot();
     }
 
-
+    @Override
+    public void onDestroyView() {
+        mActionBar.setDisplayHomeAsUpEnabled(false);
+        mActionBar = null;
+        super.onDestroyView();
+    }
 }

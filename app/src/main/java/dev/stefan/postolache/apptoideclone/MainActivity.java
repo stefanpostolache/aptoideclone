@@ -2,20 +2,20 @@ package dev.stefan.postolache.apptoideclone;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.appbar.MaterialToolbar;
+import dev.stefan.postolache.apptoideclone.appdetails.AppDetailsFragment;
+import dev.stefan.postolache.apptoideclone.home.HomeFragment;
+import dev.stefan.postolache.apptoideclone.home.HomeViewModel;
+import dev.stefan.postolache.apptoideclone.networking.dtos.AppDTO;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
-
-    AppBarConfiguration mAppBarConfiguration;
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +25,6 @@ public class MainActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-        final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
-        final NavController navController;
-        if (navHostFragment != null) {
-            navController = navHostFragment.getNavController();
-            mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        }
     }
 
     @Override
@@ -43,9 +35,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getSupportFragmentManager().popBackStack();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showDetailsOf(AppDTO appDTO) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .add(R.id.navHostFragment, AppDetailsFragment.newInstance(appDTO), "details")
+                .addToBackStack(appDTO.name+"-details")
+                .commit();
     }
 }
