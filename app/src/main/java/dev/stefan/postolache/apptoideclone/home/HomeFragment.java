@@ -50,12 +50,14 @@ public class HomeFragment extends Fragment {
 
         mBinding = FragmentHomeBinding.inflate(inflater, container, false);
 
+        mNavController = Navigation.findNavController(container);
+
         DisplayMetrics metrics = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        mNavController = Navigation.findNavController(container);
         setupRecyclerView(mBinding.editorsChoiceList, new EditorsChoiceRecyclerViewAdapter(metrics,
                 app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(app))));
+
         setupRecyclerView(mBinding.localTopAppsList, new LocalTopAppsRecyclerViewAdapter(metrics,
                 app -> mNavController.navigate(HomeFragmentDirections.actionHomeFragmentToAppDetailsFragment(app))));
 
@@ -104,7 +106,7 @@ public class HomeFragment extends Fragment {
 
     /**
      * Handles successful retrieval of app data
-     * @param result the result of the network call
+     * @param result the result of a successful network call
      */
     public void didReceiveAppData(ResultDTO result) {
         List<AppDTO> apps = result
@@ -124,8 +126,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles
+     */
     public void didFailRetrievingData() {
-
         Snackbar.make(mBinding.getRoot(),
                         R.string.fragment_home_error_message,
                         Snackbar.LENGTH_INDEFINITE)

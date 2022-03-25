@@ -15,6 +15,9 @@ public class HomeViewModel extends ViewModel {
 
     private final AptoideService mService;
 
+    /**
+     * Live data used to trigger the display of network error snackbar
+     */
     private final MutableLiveData<Boolean> mFailedDataRetrieval = new MutableLiveData<>(false);
 
     private final PublishSubject<Object> mRetrySubject = PublishSubject.create();
