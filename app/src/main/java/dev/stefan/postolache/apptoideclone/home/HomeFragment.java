@@ -131,7 +131,9 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     * Handles
+     * Handles failure of data fetch by displaying a snackbar, which
+     * enables the user to retry the connection.
+     * @param failure emitted failure from FailedDataRetrieval subject
      */
     public void didFailRetrievingData(Boolean failure) {
         Snackbar.make(mBinding.getRoot(),
